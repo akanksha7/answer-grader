@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit.logger import get_logger
 import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyBN6_iW25NEfLLxScsDThFDJm6F3evMPb0")
 import PIL.Image
 
 LOGGER = get_logger(__name__)
@@ -55,7 +57,7 @@ def run():
             if grade_button:
                 if rubric.strip() == "":
                     st.warning("Please add rubric.")
-                elif uploaded_file is None:
+                elif uploaded_file is None and not(isDisabled_image):
                     st.warning("Please add answer.")
                 else:
                     score = grade(uploaded_file, uploaded_text, rubric)
@@ -74,8 +76,8 @@ def run():
    
 
 def grade(uploaded_file, uploaded_text, rubric):
-    img_model = genai.GenerativeModel('gemini-pro-vision')
     if uploaded_file is not None:
+        img_model = genai.GenerativeModel('gemini-pro-vision')
         img = PIL.Image.open(uploaded_file)
         response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
         response.resolve()
@@ -83,7 +85,11 @@ def grade(uploaded_file, uploaded_text, rubric):
     elif uploaded_text is not None:
         student_answer = uploaded_text
 
-    text_model = genai.GenerativeModel('gemini-pro')
+    text_model = genai.GenerativeModel(
+        'gemini-pro',
+        generation_config=genai.GenerationConfig(
+            temperature=0.1,
+    ))
 
     prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Also provide reason for the score.
     <RUBRIC>: {rubric}
