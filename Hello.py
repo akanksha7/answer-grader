@@ -58,7 +58,7 @@ def run():
                 elif uploaded_file is None:
                     st.warning("Please add answer.")
                 else:
-                    score = grade(uploaded_file, rubric)
+                    score = grade(uploaded_file, uploaded_text, rubric)
 
     _ , add_answer_col, _ = st.columns([1.5,1,1])
     with add_answer_col:
@@ -73,12 +73,15 @@ def run():
         st.write(score)
    
 
-def grade(uploaded_file, rubric):
+def grade(uploaded_file, uploaded_text, rubric):
     img_model = genai.GenerativeModel('gemini-pro-vision')
-    img = PIL.Image.open(uploaded_file)
-    response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
-    response.resolve()
-    student_answer = response.text
+    if uploaded_file is not None:
+        img = PIL.Image.open(uploaded_file)
+        response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
+        response.resolve()
+        student_answer = response.text
+    elif uploaded_text is not None:
+        student_answer = uploaded_text
 
     text_model = genai.GenerativeModel('gemini-pro')
 
