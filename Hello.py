@@ -28,10 +28,10 @@ def run():
         score = None
     
 
-        col1, col2, col3 = st.columns([1, 1, 0.3])  # Adjusted column widths
+        col1, col2, col3 = st.columns([1, 1, 0.3])  
 
         with col1:
-            uploaded_file = st.file_uploader(f"Upload answer here:", type=['png', 'jpeg', 'jpg'], disabled=isDisabled_image)
+            uploaded_file = st.file_uploader(f"Upload answer here:", type=['png', 'jpeg', 'jpg'], disabled=isDisabled_image, )
             if uploaded_file is not None:
                 isDisabled_text = True
             
@@ -76,6 +76,7 @@ def run():
    
 
 def grade(uploaded_file, uploaded_text, rubric):
+    
     if uploaded_file is not None:
         img_model = genai.GenerativeModel('gemini-pro-vision')
         img = PIL.Image.open(uploaded_file)
