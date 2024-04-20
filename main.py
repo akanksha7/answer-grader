@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit.logger import get_logger
-from layout import frontend
+from layout import body
 
 
 LOGGER = get_logger(__name__)
@@ -11,7 +11,7 @@ def run():
         layout='wide'
     )
 
-    frontend()
+    body()
 
 if __name__ == "__main__":
     run()

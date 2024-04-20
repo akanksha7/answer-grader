@@ -1,6 +1,7 @@
 import google.generativeai as genai
 from config import GENAI_API_KEY
 import PIL.Image
+import constants
 
 def grader(uploaded_file, uploaded_text, rubric, marking_type):
     genai.configure(api_key=GENAI_API_KEY)
@@ -20,13 +21,13 @@ def grader(uploaded_file, uploaded_text, rubric, marking_type):
             temperature=0.1,
     ))
 
-    if marking_type == 'lenient':
+    if marking_type == constants.LENIENT:
         prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Do very lenient marking.
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
         """
-    elif marking_type == 'strict':
+    elif marking_type == constants.STRICT:
         prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Do very strict marking.
 
         <RUBRIC>: {rubric}
