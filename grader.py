@@ -25,18 +25,12 @@ def grader(uploaded_file, uploaded_text, rubric, marking_type):
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
-
-        Output should be of the format: 
-        <SCORE>: score
         """
     elif marking_type == 'strict':
         prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Do very strict marking.
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
-
-        Output should be of the format: 
-        <SCORE>: score
         """
     
     else:
@@ -44,9 +38,6 @@ def grader(uploaded_file, uploaded_text, rubric, marking_type):
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
-
-        Output should be of the format: 
-        <SCORE>: score
         """
     
     response = text_model.generate_content([prompt], stream=True)
