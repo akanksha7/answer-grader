@@ -12,9 +12,7 @@ def body():
 
     if "uploaded_files" not in st.session_state:
         st.session_state["uploaded_files"] = []
-    
-    if "slider" not in st.session_state:
-        st.session_state["slider"] = constants.NORMAL
+
     
     marking_style = header()
     uploaded_files = []
@@ -47,14 +45,9 @@ def body():
             
 
         with col3:
-            st.write("")
-            st.write("")
-            st.write("")
-            st.write("")
-            st.write("")
-            st.write("")
-            st.write("")
-            st.write("")
+            for i in range(8):
+                st.write("")
+            
             if st.button("Add new Answer"):
                 st.session_state["file_uploader_key"] += 1
                 st.session_state["text_key"] += 1
@@ -82,10 +75,11 @@ def body():
                     my_bar.progress(percent_complete + 1, text=progress_text)
                 time.sleep(1)
                 
-                try:
-                    score = grader(uploaded_files, uploaded_text, rubric, marking_style)
-                except:
-                    st.error("Error while grading")
+                # try:
+                score = grader(uploaded_files, uploaded_text, rubric, marking_style)
+                # except:
+                #     st.error("Error while grading")
+                    
 
                 my_bar.empty()
 
@@ -111,13 +105,14 @@ def header():
     }
     </style>
     """
-
+        
+    if "slider" not in st.session_state:
+        st.session_state["slider"] = constants.NORMAL
     st.markdown(page_element, unsafe_allow_html=True)
    
     with header_left:
         st.title("Answer Grader")
     with _ :
-        st.session_state.slider = constants.NORMAL
         marking_style = st.select_slider('**Marking Style**', options=[constants.NORMAL, constants.LENIENT, constants.STRICT], key= st.session_state["slider"])
     return marking_style
 

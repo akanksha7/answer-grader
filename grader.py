@@ -3,17 +3,22 @@ from config import GENAI_API_KEY
 import PIL.Image
 import constants
 
-def grader(uploaded_file, uploaded_text, rubric, marking_type):
+def grader(uploaded_files, uploaded_text, rubric, marking_type):
     genai.configure(api_key=GENAI_API_KEY)
     
-    if uploaded_file is not None:
+    if uploaded_files:
         img_model = genai.GenerativeModel('gemini-pro-vision')
-        img = PIL.Image.open(uploaded_file)
-        response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
-        response.resolve()
-        student_answer = response.text
-    elif uploaded_text is not None:
+        student_answer = ""
+        for file in uploaded_files:
+            img = PIL.Image.open(file)
+            response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
+            response.resolve()
+            student_answer += response.text
+
+
+    elif uploaded_text.strip() != "":
         student_answer = uploaded_text
+
 
     text_model = genai.GenerativeModel(
         'gemini-pro',
