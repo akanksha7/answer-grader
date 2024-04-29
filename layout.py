@@ -2,6 +2,8 @@ import streamlit as st
 from grader import grader
 import time
 import constants
+import pathlib
+
 
 
 def body():
@@ -91,12 +93,16 @@ def body():
    
 
 def header():
+    code_dir = pathlib.Path(__file__).parent.resolve()
+    img_path = str(code_dir / "background.jpeg")
+
     header_left, _ , header_right= st.columns((2, 1, 0.5))
+
     page_element="""
     <style>
     [data-testid="stAppViewContainer"]{
 
-    background-image: url("https://mcdn.wallpapersafari.com/medium/0/8/UItQvK.jpg");
+    background-img: url("/workspaces/answer-grader/background.jpeg");
  
     background-size: cover;
     }
