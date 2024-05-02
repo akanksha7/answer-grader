@@ -23,20 +23,20 @@ def grader(uploaded_files, uploaded_text, rubric, marking_type):
     ))
 
     if marking_type == constants.LENIENT:
-        prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Do very lenient marking.
+        prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Ensure that you don't induce your own bias, judge solely on the basis of the rubric. Do very lenient marking.
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
         """
     elif marking_type == constants.STRICT:
-        prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Do very strict marking.
+        prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Ensure that you don't induce your own bias, judge solely on the basis of the rubric. Do very strict marking.
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
         """
     
     else:
-        prompt = f"""Use the provided question\'s rubric to give a score for the following answer.
+        prompt = f"""Use the provided question\'s rubric to give a score for the following answer. Ensure that you don't induce your own bias, judge solely on the basis of the rubric. 
 
         <RUBRIC>: {rubric}
         <ANSWER>: {student_answer}
