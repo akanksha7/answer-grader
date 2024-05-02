@@ -46,3 +46,5 @@ The Answer Evaluator holds immense potential to revolutionize the grading proces
 
 In essence, the Answer Evaluator is not just a tool; it's a catalyst for educational transformation, empowering educators and students alike to thrive in an increasingly digital world.
 
+<img width="1455" alt="Screenshot 2024-05-02 at 3 46 31 PM" src="https://github.com/akanksha7/answer-grader/assets/18654204/83d70674-a053-4647-a7fd-b7721cccdbfb">
+
