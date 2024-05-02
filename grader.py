@@ -8,10 +8,12 @@ def grader(uploaded_files, uploaded_text, rubric, marking_type):
     
     if uploaded_files:
         img_model = genai.GenerativeModel('gemini-pro-vision')
-        img = PIL.Image.open(uploaded_files)
-        response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
-        response.resolve()
-        student_answer = response.text
+        student_answer = ''
+        for image in uploaded_files:
+            img = PIL.Image.open(image)
+            response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
+            response.resolve()
+            student_answer += response.text
     elif uploaded_text is not None:
         student_answer = uploaded_text
 
