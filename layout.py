@@ -2,9 +2,6 @@ import streamlit as st
 from grader import grader
 import time
 import constants
-import pathlib
-
-
 
 def body():
     if "file_uploader_key" not in st.session_state:
@@ -44,7 +41,6 @@ def body():
         with col2:
             rubric = st.text_area("**Enter Rubric**", key="rubric_text", height= 260)
 
-            
 
         with col3:
             for i in range(8):
@@ -77,10 +73,10 @@ def body():
                     my_bar.progress(percent_complete + 1, text=progress_text)
                 time.sleep(1)
                 
-                # try:
-                score = grader(uploaded_files, uploaded_text, rubric, marking_style)
-                # except:
-                #     st.error("Error while grading")
+                try:
+                    score = grader(uploaded_files, uploaded_text, rubric, marking_style)
+                except:
+                    st.error("Error while grading")
                     
 
                 my_bar.empty()
@@ -93,18 +89,19 @@ def body():
    
 
 def header():
-    code_dir = pathlib.Path(__file__).parent.resolve()
-    img_path = str(code_dir / "background.jpeg")
-
+    
     header_left, _ , header_right= st.columns((2, 1, 0.5))
 
     page_element="""
     <style>
     [data-testid="stAppViewContainer"]{
 
-    background-img: url("/workspaces/answer-grader/background.jpeg");
- 
-    background-size: cover;
+    background-image: url("https://img.freepik.com/free-vector/eye-catching-glowing-question-mark-sign-background-who-why-query-vector_1017-48020.jpg?w=1060&t=st=1714678379~exp=1714678979~hmac=cf187d978d7b53500e3d53cb55e3416b2e63cc56e46185b27a14799d48a2ac8d");
+    background-repeat: no-repeat;
+    background-size: stretch;
+    background-position: left;
+    background-color: black;
+    border: none;
     }
     [data-testid="stHeader"]{
     background-color: rgba(0,0,0,0);
@@ -117,9 +114,9 @@ def header():
     st.markdown(page_element, unsafe_allow_html=True)
    
     with header_left:
-        st.title("Answer Grader")
+        st.markdown("<h1 style='color:red; font-family: Arial, sans-serif;'>Answer Grader</h1>", unsafe_allow_html=True)
     with _ :
-        marking_style = st.select_slider('**Marking Style**', options=[constants.NORMAL, constants.LENIENT, constants.STRICT], key= st.session_state["slider"])
+        marking_style = st.select_slider('**Marking Style**', options=[constants.LENIENT, constants.NORMAL,  constants.STRICT], value=constants.NORMAL ,key= st.session_state["slider"])
     return marking_style
 
 def footer():

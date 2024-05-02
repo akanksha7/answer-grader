@@ -9,6 +9,7 @@ def run():
     st.set_page_config(
         page_title="Answer Grader",
         layout='wide'
+        
     )
 
     body()

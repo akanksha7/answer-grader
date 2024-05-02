@@ -8,7 +8,7 @@ def grader(uploaded_files, uploaded_text, rubric, marking_type):
     
     if uploaded_files:
         img_model = genai.GenerativeModel('gemini-pro-vision')
-        img = PIL.Image.open(uploaded_file)
+        img = PIL.Image.open(uploaded_files)
         response = img_model.generate_content(["Grab the text from the image.", img], stream=True)
         response.resolve()
         student_answer = response.text
